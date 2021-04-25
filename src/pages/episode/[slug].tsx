@@ -6,6 +6,7 @@ import { convertDurationToTimeString } from '../../utils/convertDurationToTimeSt
 import styles from './episode.module.scss';
 import Image from 'next/image';
 import Link from 'next/link';
+// import { useRouter } from 'next/router';
 
 type Episode = {
   id: string,
@@ -24,6 +25,15 @@ type EpisodeProps = {
 }
 
 export default function Episode({ episode }: EpisodeProps) {
+  // isso serve para quando estiver fallback true
+  // const router = useRouter();
+
+  // if(router.isFallback) {
+  //   return(
+  //     <p>Carregando...</p>
+  //   )
+  // }
+
   return (
     <div className={styles.episode}>
       <div className={styles.thumbnailContainer}>
