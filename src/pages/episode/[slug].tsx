@@ -73,19 +73,27 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async (ctx) => {
   const { slug } = ctx.params;
-  const { data } = await api.get(`/episodes/${slug}`);
+  // const { data } = await api.get(`/episodes/${slug}`);
+  const data = await api()
 
-  const episode = {
-    id: data.id,
-    title: data.title,
-    members: data.members,
-    publishedAt: format(parseISO(data.published_at), 'd MMM yy', { locale: ptBR }),
-    thumbnail: data.thumbnail,
-    description: data.description,
-    duration: Number(data.file.duration),
-    durationAsString: convertDurationToTimeString(Number(data.file.duration)),
-    url: data.file.url,
-  }
+  let episode;
+
+  data.map(item => {
+    if (item.id == slug) {
+      episode = {
+        id: item.id,
+        title: item.title,
+        members: item.members,
+        publishedAt: format(parseISO(item.published_at), 'd MMM yy', { locale: ptBR }),
+        thumbnail: item.thumbnail,
+        description: item.description,
+        duration: Number(item.file.duration),
+        durationAsString: convertDurationToTimeString(Number(item.file.duration)),
+        url: item.file.url,
+      }
+    }
+  })
+
 
   return {
     props: { episode },
